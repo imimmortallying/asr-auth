@@ -12,3 +12,25 @@ docker exec -it asr-postgres psql -U postgres -d asr -c 'SELECT * FROM "user";'
 docker exec -it asr-postgres psql -U postgres -d asr -c "\dt"
 
 //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzgxOTI5NDgwLCJleHAiOjE3ODQ1MjE0ODB9.lf-oWONwwCj-JQFyHfHYhL7WUx1Pj5cXyqScT41h-8Q
+
+
+##
+- посмотреть список всех баз в одном сервере (postgres это сервер)
+docker exec -it asr-postgres psql -U postgres
+\l        ← список всех баз в этом одном сервере
+
+-
+\c asr — переключиться в базу asr.
+\dt
+
+??  в чем разница между 
+docker exec -it asr-postgres psql -U postgres -d asr
+и
+docker exec -it <имя_контейнера> psql -U postgres
+из обеих команд я попадаю в postgres
+
+## 
+- чтобы переименовать базу, к ней не должно быть активных подключений
+\c postgres переключаемся на служебную базу, чтобы отцепиться от asr 
+ALTER DATABASE asr RENAME TO asr_auth; - переименуем
+CREATE DATABASE asr_jobs; - создаем
